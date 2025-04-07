@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>คำนวณราคาสินค้า</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; max-width: 800px; margin: auto; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background-color: #eee; }
+    input[type="number"] { width: 60px; }
+    @media (max-width: 600px) {
+      body { padding: 10px; font-size: 14px; }
+      input[type="number"] { width: 50px; }
+    }
+  </style>
+</head>
+<body>
+
+<h2>คำนวณราคาสินค้าให้ลูกค้า</h2>
+<table>
+  <thead>
+    <tr>
+      <th>รายการ</th>
+      <th>ราคา / ใบ</th>
+      <th>จำนวน</th>
+      <th>จำนวนรวม</th>
+    </tr>
+  </thead>
+  <tbody id="sell-table">
+    <tr>
+      <td>ใบเบิกไม้กวาด</td>
+      <td>100</td>
+      <td><input type="number" value="0" onchange="calculate()"></td>
+      <td class="sum">0</td>
+    </tr>
+    <tr>
+      <td>หินแก่นเวทย์</td>
+      <td>1000</td>
+      <td><input type="number" value="0" onchange="calculate()"></td>
+      <td class="sum">0</td>
+    </tr>
+    <tr>
+      <td>ผ้าเช็ด</td>
+      <td>300</td>
+      <td><input type="number" value="0" onchange="calculate()"></td>
+      <td class="sum">0</td>
+    </tr>
+    <tr>
+      <td>บัตรแต่งรถ</td>
+      <td>3000</td>
+      <td><input type="number" value="0" onchange="calculate()"></td>
+      <td class="sum">0</td>
+    </tr>
+  </tbody>
+</table>
+<p><strong>รวมราคาขาย: <span id="total-sell">0</span> บาท</strong></p>
+
+<h2>คำนวณซื้อจากช่าง</h2>
+<table>
+  <thead>
+    <tr>
+      <th>รายการ</th>
+      <th>ราคา / กล่อง</th>
+      <th>จำนวน</th>
+      <th>จำนวนรวม</th>
+    </tr>
+  </thead>
+  <tbody id="buy-table">
+    <tr>
+      <td>ใบเบิกไม้กวาด</td>
+      <td>2500</td>
+      <td><input type="number" value="0" onchange="calculate()"></td>
+      <td class="sum">0</td>
+    </tr>
+    <tr>
+      <td>หินแก่นเวทย์</td>
+      <td>7500</td>
+      <td><input type="number" value="0" onchange="calculate()"></td>
+      <td class="sum">0</td>
+    </tr>
+    <tr>
+      <td>ผ้าเช็ด</td>
+      <td>3000</td>
+      <td><input type="number" value="0" onchange="calculate()"></td>
+      <td class="sum">0</td>
+    </tr>
+    <tr>
+      <td>บัตรแต่งรถ</td>
+      <td>2000</td>
+      <td><input type="number" value="0" onchange="calculate()"></td>
+      <td class="sum">0</td>
+    </tr>
+  </tbody>
+</table>
+<p><strong>รวมราคาซื้อ: <span id="total-buy">0</span> บาท</strong></p>
+
+<script>
+function calculate() {
+  let totalSell = 0;
+  let totalBuy = 0;
+
+  document.querySelectorAll("#sell-table tr").forEach(row => {
+    const price = parseFloat(row.cells[1].textContent);
+    const qty = parseInt(row.cells[2].querySelector("input").value) || 0;
+    const sum = price * qty;
+    row.cells[3].textContent = sum;
+    totalSell += sum;
+  });
+
+  document.querySelectorAll("#buy-table tr").forEach(row => {
+    const price = parseFloat(row.cells[1].textContent);
+    const qty = parseInt(row.cells[2].querySelector("input").value) || 0;
+    const sum = price * qty;
+    row.cells[3].textContent = sum;
+    totalBuy += sum;
+  });
+
+  document.getElementById("total-sell").textContent = totalSell;
+  document.getElementById("total-buy").textContent = totalBuy;
+}
+</script>
+
+</body>
+</html>
